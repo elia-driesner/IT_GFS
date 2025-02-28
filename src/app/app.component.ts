@@ -1,23 +1,19 @@
 import { Component } from '@angular/core';
-
-import * as gpio from 'rpi-gpio';
+import { GpioService } from './gpio.service';
 
 @Component({
   selector: 'app-root',
   imports: [],
+  providers: [GpioService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  constructor() {
-    gpio.setup(7, gpio.DIR_OUT)
-  }
 
-  pinState : boolean = false;
+  constructor(private gpioService: GpioService) {}
 
   toggleLed() : void {
     console.log('led')
-    this.pinState = !this.pinState;
-    gpio.write(7, this.pinState)
+    this.gpioService.toggleLed();
   }
 }
