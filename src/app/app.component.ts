@@ -1,12 +1,23 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+
+import * as gpio from 'rpi-gpio';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'it_gfs';
+  constructor() {
+    gpio.setup(7, gpio.DIR_OUT)
+  }
+
+  pinState : boolean = false;
+
+  toggleLed() : void {
+    console.log('led')
+    this.pinState = !this.pinState;
+    gpio.write(7, this.pinState)
+  }
 }
